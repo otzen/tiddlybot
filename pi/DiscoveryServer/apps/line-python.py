@@ -1,6 +1,5 @@
 from discovery_bot import Movement
 import RPi.GPIO as GPIO
-from RPIO import PWM
 import time
 
 GPIO.setmode(GPIO.BCM)

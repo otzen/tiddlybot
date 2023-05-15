@@ -28,17 +28,17 @@ class TestSequenceFunctions(unittest.TestCase):
     def contains_all_chars(orig, result):
       return re.sub(spaces, '', orig) == re.sub(spaces, '', result)
 
-    sentences = [u'Quay Pegman qua bên trái hoặc bên phải 90 độ.',
-                 u'Foo bar baz this is english that is okay bye.',
-                 u'If there is a path in the specified direction, \nthen ' +
-                 u'do some actions.',
-                 u'If there is a path in the specified direction, then do ' +
-                 u'the first block of actions. Otherwise, do the second ' +
-                 u'block of actions.']
+    sentences = ['Quay Pegman qua bên trái hoặc bên phải 90 độ.',
+                 'Foo bar baz this is english that is okay bye.',
+                 'If there is a path in the specified direction, \nthen ' +
+                 'do some actions.',
+                 'If there is a path in the specified direction, then do ' +
+                 'the first block of actions. Otherwise, do the second ' +
+                 'block of actions.']
     for sentence in sentences:
       output = common.insert_breaks(sentence, 30, 50)
-      self.assert_(contains_all_chars(sentence, output),
-                   u'Mismatch between:\n{0}\n{1}'.format(
+      self.assertTrue(contains_all_chars(sentence, output),
+                   'Mismatch between:\n{0}\n{1}'.format(
                        re.sub(spaces, '', sentence),
                        re.sub(spaces, '', output)))
 

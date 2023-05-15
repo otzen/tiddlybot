@@ -98,22 +98,22 @@ def output_as_html(messages, apps, verbose):
   print("<SCRIPT LANGUAGE='JavaScript1.2' SRC='https://neil.fraser.name/"
         "software/tablesort/tablesort-min.js'></SCRIPT>")
   print('<table cellspacing=5><thead><tr>')
-  print('<th class=nocase>Language</th><th class=num>' +
-        '</th><th class=num>'.join(apps) + '</th></tr></thead><tbody>')
+  print(('<th class=nocase>Language</th><th class=num>' +
+        '</th><th class=num>'.join(apps) + '</th></tr></thead><tbody>'))
   for lang in messages:
     if lang != TOTAL:
-      print('<tr><td><a href="{1}">{0}</a></td>'.format(
-          lang, generate_language_url(lang)))
+      print(('<tr><td><a href="{1}">{0}</a></td>'.format(
+          lang, generate_language_url(lang))))
       for app in apps:
-        print '<td>'
-        print(generate_number_as_percent(
+        print('<td>')
+        print((generate_number_as_percent(
             get_prefix_count(app, messages[lang]),
             get_prefix_count(app, messages[TOTAL]),
-            (lang + app)))
-        print '</td>'
+            (lang + app))))
+        print('</td>')
       print('</tr>')
   print('</tbody><tfoot><tr><td>ALL</td><td>')
-  print('</td><td>'.join([str(get_prefix_count(app, TOTAL)) for app in apps]))
+  print(('</td><td>'.join([str(get_prefix_count(app, TOTAL)) for app in apps])))
   print('</td></tr></tfoot></table>')
 
   if verbose:
@@ -122,12 +122,12 @@ def output_as_html(messages, apps, verbose):
         for app in apps:
           if (get_prefix_count(app, messages[lang]) <
               get_prefix_count(app, messages[TOTAL])):
-            print('<div id={0}{1}><strong>{1} (<a href="{2}">{0}</a>)'.
-                  format(lang, app, generate_language_url(lang)))
+            print(('<div id={0}{1}><strong>{1} (<a href="{2}">{0}</a>)'.
+                  format(lang, app, generate_language_url(lang))))
             print('</strong> missing: ')
-            print(', '.join(
+            print((', '.join(
                 [key for key in messages[TOTAL] if
-                 key.startswith(app) and key not in messages[lang]]))
+                 key.startswith(app) and key not in messages[lang]])))
             print('<br><br></div>')
   print('</body>')
 
@@ -147,28 +147,28 @@ def output_as_text(messages, apps, verbose):
     return '{0} ({1}%)'.format(num, num * 100 / total)
   MAX_WIDTH = len('999 (100%)') + 1
   FIELD_STRING = '{0: <' + str(MAX_WIDTH) + '}'
-  print(FIELD_STRING.format('Language') + ''.join(
-      [FIELD_STRING.format(app) for app in apps]))
-  print(('-' * (MAX_WIDTH - 1) + ' ') * (len(apps) + 1))
+  print((FIELD_STRING.format('Language') + ''.join(
+      [FIELD_STRING.format(app) for app in apps])))
+  print((('-' * (MAX_WIDTH - 1) + ' ') * (len(apps) + 1)))
   for lang in messages:
     if lang != TOTAL:
-      print(FIELD_STRING.format(lang) +
+      print((FIELD_STRING.format(lang) +
             ''.join([FIELD_STRING.format(generate_number_as_percent(
                 get_prefix_count(app, messages[lang]),
                 get_prefix_count(app, messages[TOTAL])))
-                     for app in apps]))
-  print(FIELD_STRING.format(TOTAL) +
+                     for app in apps])))
+  print((FIELD_STRING.format(TOTAL) +
         ''.join(
             [FIELD_STRING.format(get_prefix_count(app, messages[TOTAL]))
-             for app in apps]))
+             for app in apps])))
   if verbose:
     for lang in messages:
       if lang != TOTAL:
         for app in apps:
           missing = [key for key in messages[TOTAL]
                      if key.startswith(app) and key not in messages[lang]]
-          print('{0} {1}: Missing: {2}'.format(
-              app.upper(), lang, (', '.join(missing) if missing else 'none')))
+          print(('{0} {1}: Missing: {2}'.format(
+              app.upper(), lang, (', '.join(missing) if missing else 'none'))))
 
 
 def output_as_csv(messages, apps):
@@ -182,23 +182,23 @@ def output_as_csv(messages, apps):
       apps: Apps to consider.
   """
   # Header row.
-  print('Language, ' + ', ,'.join(apps))
+  print(('Language, ' + ', ,'.join(apps)))
 
   # Total row.
   # Put at top, rather than bottom, so it can be frozen.
-  print('TOTAL, ' + ', '.join(
+  print(('TOTAL, ' + ', '.join(
       [str(get_prefix_count(app, messages[TOTAL])) + ', '
-       for app in apps]))
+       for app in apps])))
 
   # One line per language.
   for lang in messages:
     if lang != TOTAL:
-      print(lang + ', ' + ', '.join(
+      print((lang + ', ' + ', '.join(
           [str(get_prefix_count(app, messages[lang]))
            + ', '
            + str((get_prefix_count(app, messages[lang]) * 1.0 /
                   get_prefix_count(app, messages[TOTAL])))
-           for app in apps]))
+           for app in apps])))
 
 
 def main():

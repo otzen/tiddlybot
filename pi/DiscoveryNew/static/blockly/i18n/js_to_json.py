@@ -90,7 +90,7 @@ def main():
         result['meaning'] = match.group(1)
         result['source'] = match.group(2)
         if not description:
-          print('Warning: No description for ' + result['meaning'])
+          print(('Warning: No description for ' + result['meaning']))
         result['description'] = description
         description = ''
         results.append(result)
@@ -98,8 +98,8 @@ def main():
         match = _INPUT_SYN_PATTERN.match(line)
         if match:
           if description:
-            print('Warning: Description preceding definition of synonym {0}.'.
-                  format(match.group(1)))
+            print(('Warning: Description preceding definition of synonym {0}.'.
+                  format(match.group(1))))
             description = ''
           synonyms[match.group(1)] = match.group(2)
   infile.close()
@@ -112,8 +112,8 @@ def main():
   with open(synonym_file_name, 'w') as outfile:
     json.dump(synonyms, outfile)
   if not args.quiet:
-    print("Wrote {0} synonym pairs to {1}.".format(
-        len(synonyms), synonym_file_name))
+    print(("Wrote {0} synonym pairs to {1}.".format(
+        len(synonyms), synonym_file_name)))
 
 
 if __name__ == '__main__':

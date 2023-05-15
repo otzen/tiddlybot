@@ -26,7 +26,7 @@ import logging
 
 from google.appengine.ext import db
 
-print "Content-type: text/plain\n"
+print("Content-type: text/plain\n")
 
 class Report(db.Model):
   identifier = db.FloatProperty()
@@ -49,5 +49,5 @@ try:
   row = Report(identifier = identifier, application = application,
                level = level, result = result, program = program)
   row.put()
-except ValueError, KeyError:
+except ValueError as KeyError:
   logging.error("Unable to extract all form fields.")

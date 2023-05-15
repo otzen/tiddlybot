@@ -1,16 +1,15 @@
 #-*- coding:utf-8 -*-
 from __future__ import division
 
-from discovery_bot import Light
-from discovery_bot import pins
+from discovery_bot import Light, pins
 import time
 from discovery_bot import Ultrasound
 
-red = Light(pins.LED_RED)
+red = Light( pins.LED_RED )
 
-blue = Light(pins.LED_BLUE)
+blue = Light( pins.LED_BLUE )
 
-green = Light(pins.LED_GREEN)
+green = Light( pins.LED_GREEN )
 
 usound = Ultrasound()
 

@@ -35,7 +35,8 @@
 #   dart_compressed.js: The compressed Dart generator.
 #   msg/js/<LANG>.js for every language <LANG> defined in msg/js/<LANG>.json.
 
-import errno, glob, httplib, json, os, re, subprocess, sys, threading, urllib
+import errno, glob, http.client, json, os, re, subprocess, sys, threading, urllib.request, urllib.parse, urllib.error
+import importlib
 
 def import_path(fullpath):
   """Import a file with full path specification.
@@ -51,7 +52,7 @@ def import_path(fullpath):
   filename, ext = os.path.splitext(filename)
   sys.path.append(path)
   module = __import__(filename)
-  reload(module) # Might be out of date
+  importlib.reload(module) # Might be out of date
   del sys.path[-1]
   return module
 
@@ -133,7 +134,7 @@ document.write('<script type="text/javascript" src="' + window.BLOCKLY_DIR +
 document.write('<script type="text/javascript">window.BLOCKLY_BOOT()</script>');
 """)
     f.close()
-    print('SUCCESS: ' + target_filename)
+    print(('SUCCESS: ' + target_filename))
 
 
 class Gen_compressed(threading.Thread):
@@ -235,8 +236,8 @@ class Gen_compressed(threading.Thread):
   def do_compile(self, params, target_filename, filenames, remove):
     # Send the request to Google.
     headers = { "Content-type": "application/x-www-form-urlencoded" }
-    conn = httplib.HTTPConnection('closure-compiler.appspot.com')
-    conn.request('POST', '/compile', urllib.urlencode(params), headers)
+    conn = http.client.HTTPConnection('closure-compiler.appspot.com')
+    conn.request('POST', '/compile', urllib.parse.urlencode(params), headers)
     response = conn.getresponse()
     json_str = response.read()
     conn.close()
@@ -250,34 +251,34 @@ class Gen_compressed(threading.Thread):
       n = int(name[6:])
       return filenames[n]
 
-    if json_data.has_key('serverErrors'):
+    if 'serverErrors' in json_data:
       errors = json_data['serverErrors']
       for error in errors:
-        print 'SERVER ERROR: %s' % target_filename
-        print error['error']
-    elif json_data.has_key('errors'):
+        print('SERVER ERROR: %s' % target_filename)
+        print(error['error'])
+    elif 'errors' in json_data:
       errors = json_data['errors']
       for error in errors:
         print('FATAL ERROR')
-        print(error['error'])
-        print('%s at line %d:' % (
-            file_lookup(error['file']), error['lineno']))
-        print(error['line'])
-        print((' ' * error['charno']) + '^')
+        print((error['error']))
+        print(('%s at line %d:' % (
+            file_lookup(error['file']), error['lineno'])))
+        print((error['line']))
+        print(((' ' * error['charno']) + '^'))
         sys.exit(1)
     else:
-      if json_data.has_key('warnings'):
+      if 'warnings' in json_data:
         warnings = json_data['warnings']
         for warning in warnings:
           print('WARNING')
-          print(warning['warning'])
-          print('%s at line %d:' % (
-              file_lookup(warning['file']), warning['lineno']))
-          print(warning['line'])
-          print((' ' * warning['charno']) + '^')
+          print((warning['warning']))
+          print(('%s at line %d:' % (
+              file_lookup(warning['file']), warning['lineno'])))
+          print((warning['line']))
+          print(((' ' * warning['charno']) + '^'))
         print()
 
-      if not json_data.has_key('compiledCode'):
+      if 'compiledCode' not in json_data:
         print('FATAL ERROR: Compiler did not return compiledCode.')
         sys.exit(1)
 
@@ -317,11 +318,11 @@ class Gen_compressed(threading.Thread):
         original_kb = int(original_b / 1024 + 0.5)
         compressed_kb = int(compressed_b / 1024 + 0.5)
         ratio = int(float(compressed_b) / float(original_b) * 100 + 0.5)
-        print('SUCCESS: ' + target_filename)
-        print('Size changed from %d KB to %d KB (%d%%).' % (
-            original_kb, compressed_kb, ratio))
+        print(('SUCCESS: ' + target_filename))
+        print(('Size changed from %d KB to %d KB (%d%%).' % (
+            original_kb, compressed_kb, ratio)))
       else:
-        print 'UNKNOWN ERROR'
+        print('UNKNOWN ERROR')
 
 
 class Gen_langfiles(threading.Thread):
@@ -338,18 +339,18 @@ class Gen_langfiles(threading.Thread):
     try:
       return (max(os.path.getmtime(src) for src in srcs) >
               min(os.path.getmtime(dest) for dest in dests))
-    except OSError, e:
+    except OSError as e:
       # Was a file not found?
       if e.errno == errno.ENOENT:
         # If it was a source file, we can't proceed.
         if e.filename in srcs:
-          print('Source file missing: ' + e.filename)
+          print(('Source file missing: ' + e.filename))
           sys.exit(1)
         else:
           # If a destination file was missing, rebuild.
           return True
       else:
-        print('Error checking file creation times: ' + e)
+        print(('Error checking file creation times: ' + e))
 
   def run(self):
     # The files msg/json/{en,qqq,synonyms}.json depend on msg/messages.js.
@@ -363,10 +364,10 @@ class Gen_langfiles(threading.Thread):
             '--input_file', 'msg/messages.js',
             '--output_dir', 'msg/json/',
             '--quiet'])
-      except (subprocess.CalledProcessError, OSError), e:
+      except (subprocess.CalledProcessError, OSError) as e:
         # Documentation for subprocess.check_call says that CalledProcessError
         # will be raised on failure, but I found that OSError is also possible.
-        print('Error running i18n/js_to_json.py: ', e)
+        print(('Error running i18n/js_to_json.py: ', e))
         sys.exit(1)
 
     # Checking whether it is necessary to rebuild the js files would be a lot of
@@ -387,8 +388,8 @@ class Gen_langfiles(threading.Thread):
                     (file.endswith(('keys.json', 'synonyms.json', 'qqq.json')))]
       cmd.extend(json_files)
       subprocess.check_call(cmd)
-    except (subprocess.CalledProcessError, OSError), e:
-      print('Error running i18n/create_messages.py: ', e)
+    except (subprocess.CalledProcessError, OSError) as e:
+      print(('Error running i18n/create_messages.py: ', e))
       sys.exit(1)
 
     # Output list of .js files created.
@@ -396,9 +397,9 @@ class Gen_langfiles(threading.Thread):
       # This assumes the path to the current directory does not contain 'json'.
       f = f.replace('json', 'js')
       if os.path.isfile(f):
-        print('SUCCESS: ' + f)
+        print(('SUCCESS: ' + f))
       else:
-        print('FAILED to create ' + f)
+        print(('FAILED to create ' + f))
 
 
 if __name__ == '__main__':

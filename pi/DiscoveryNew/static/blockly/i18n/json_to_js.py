@@ -100,12 +100,12 @@ def _process_file(path_to_json, target_lang, key_dict):
         if key != '@metadata':
             try:
                 identifier = key_dict[key]
-            except KeyError, e:
-                print('Key "%s" is in %s but not in %s' %
-                      (key, keyfile, args.key_file))
+            except KeyError as e:
+                print(('Key "%s" is in %s but not in %s' %
+                      (key, keyfile, args.key_file)))
                 raise e
             target = j.get(key)
-            out_file.write(u"""
+            out_file.write("""
       <trans-unit id="{0}" datatype="html">
         <target>{1}</target>
       </trans-unit>""".format(identifier, target))
@@ -172,9 +172,9 @@ def main():
           '--outputPathFormat', args.output_dir + '{LOCALE}.js',
           '--srcs', args.template])
       if len(processed_langs) == 1:
-        print('Created ' + processed_lang_list + '.js in ' + args.output_dir)
+        print(('Created ' + processed_lang_list + '.js in ' + args.output_dir))
       else:
-        print('Created {' + processed_lang_list + '}.js in ' + args.output_dir)
+        print(('Created {' + processed_lang_list + '}.js in ' + args.output_dir))
 
       for lang in processed_langs:
         os.remove(args.output_dir + lang + '.xlf')

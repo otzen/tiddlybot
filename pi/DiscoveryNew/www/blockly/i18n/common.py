@@ -59,8 +59,8 @@ def read_json_file(filename):
     if '@metadata' in defs:
       del defs['@metadata']
     return defs
-  except ValueError, e:
-    print('Error reading ' + filename)
+  except ValueError as e:
+    print(('Error reading ' + filename))
     raise InputError(file, str(e))
 
 
@@ -85,7 +85,7 @@ def _create_qqq_file(output_dir):
     """
     qqq_file_name = os.path.join(os.curdir, output_dir, 'qqq.json')
     qqq_file = codecs.open(qqq_file_name, 'w', 'utf-8')
-    print 'Created file: ' + qqq_file_name
+    print('Created file: ' + qqq_file_name)
     qqq_file.write('{\n')
     return qqq_file
 
@@ -126,7 +126,7 @@ def _create_lang_file(author, lang, output_dir):
     """
     lang_file_name = os.path.join(os.curdir, output_dir, lang + '.json')
     lang_file = codecs.open(lang_file_name, 'w', 'utf-8')
-    print 'Created file: ' + lang_file_name
+    print('Created file: ' + lang_file_name)
     # string.format doesn't like printing braces, so break up our writes.
     lang_file.write('{\n\t"@metadata": {')
     lang_file.write("""
@@ -166,7 +166,7 @@ def _create_key_file(output_dir):
     key_file_name = os.path.join(os.curdir, output_dir, 'keys.json')
     key_file = open(key_file_name, 'w')
     key_file.write('{\n')
-    print 'Created file: ' + key_file_name
+    print('Created file: ' + key_file_name)
     return key_file
 
 
@@ -218,12 +218,12 @@ def write_files(author, lang, output_dir, units, write_key_file):
             if write_key_file:
               key_file.write(',\n')
             qqq_file.write(',\n')
-        lang_file.write(u'\t"{0}": "{1}"'.format(
+        lang_file.write('\t"{0}": "{1}"'.format(
             unit['meaning'],
             unit['source'].replace('"', "'")))
         if write_key_file:
           key_file.write('"{0}": "{1}"'.format(unit['meaning'], unit['key']))
-        qqq_file.write(u'\t"{0}": "{1}"'.format(
+        qqq_file.write('\t"{0}": "{1}"'.format(
             unit['meaning'],
             unit['description'].replace('"', "'").replace(
                 '{lb}', '{').replace('{rb}', '}')))

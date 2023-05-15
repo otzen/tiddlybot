@@ -47,12 +47,12 @@ def main():
   # Iterate over files.
   for filename in args.files:
     # Read in json using Python libraries.  This eliminates duplicates.
-    print('Processing ' + filename + '...')
+    print(('Processing ' + filename + '...'))
     try:
       with codecs.open(filename, 'r', 'utf-8') as infile:
         j = json.load(infile)
-    except ValueError, e:
-      print('Error reading ' + filename)
+    except ValueError as e:
+      print(('Error reading ' + filename))
       raise InputError(file, str(e))
 
     # Built up output strings as an array to make output of delimiters easier.

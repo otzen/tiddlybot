@@ -1,19 +1,10 @@
-import os
-import os.path
-import math
-import time
 import tornado.httpserver
 import tornado.ioloop
 import tornado.web
 import tornado.escape
 import sockjs.tornado
-import threading
-import Queue
-import json
-import subprocess
 import signal
 
-from discovery_bot import pins
 from discovery_bot import Movement
 from discovery_bot import Servo
 

@@ -1,5 +1,4 @@
 from discovery_bot import Servo
-from discovery_bot import pins
 
 s1 = Servo(1)
 s2 = Servo(2)

@@ -56,12 +56,12 @@ def main():
   # in target languages' .json files.
   source_defs = read_json_file(os.path.join(os.curdir, args.source_lang_file))
   # Make sure the source file doesn't contain a newline or carriage return.
-  for key, value in source_defs.items():
+  for key, value in list(source_defs.items()):
     if _NEWLINE_PATTERN.search(value):
-      print('ERROR: definition of {0} in {1} contained a newline character.'.
-            format(key, args.source_lang_file))
+      print(('ERROR: definition of {0} in {1} contained a newline character.'.
+            format(key, args.source_lang_file)))
       sys.exit(1)
-  sorted_keys = source_defs.keys()
+  sorted_keys = list(source_defs.keys())
   sorted_keys.sort()
 
   # Read in synonyms file, which must be output in every language.
@@ -77,11 +77,11 @@ def main():
     if target_lang not in ('qqq', 'keys', 'synonyms'):
       target_defs = read_json_file(os.path.join(os.curdir, arg_file))
       # If there's a '\n' or '\r', remove it and print a warning.
-      for key, value in target_defs.items():
+      for key, value in list(target_defs.items()):
         if _NEWLINE_PATTERN.search(value):
-          print('WARNING: definition of {0} in {1} contained '
+          print(('WARNING: definition of {0} in {1} contained '
                 'a newline character.'.
-                format(key, arg_file))
+                format(key, arg_file)))
           target_defs[key] = _NEWLINE_PATTERN.sub(' ', value)
 
       # Output file.
@@ -109,7 +109,7 @@ goog.require('Blockly.Msg');
             value = source_defs[key]
             comment = '  // untranslated'
           value = value.replace('"', '\\"')
-          outfile.write(u'Blockly.Msg.{0} = "{1}";{2}\n'.format(
+          outfile.write('Blockly.Msg.{0} = "{1}";{2}\n'.format(
               key, value, comment))
 
         # Announce any keys defined only for target language.
@@ -118,16 +118,16 @@ goog.require('Blockly.Msg');
           synonym_keys = [key for key in target_defs if key in synonym_defs]
           if not args.quiet:
             if extra_keys:
-              print('These extra keys appeared in {0}: {1}'.format(
-                  filename, ', '.join(extra_keys)))
+              print(('These extra keys appeared in {0}: {1}'.format(
+                  filename, ', '.join(extra_keys))))
             if synonym_keys:
-              print('These synonym keys appeared in {0}: {1}'.format(
-                  filename, ', '.join(synonym_keys)))
+              print(('These synonym keys appeared in {0}: {1}'.format(
+                  filename, ', '.join(synonym_keys))))
 
         outfile.write(synonym_text)
 
       if not args.quiet:
-        print('Created {0}.'.format(outname))
+        print(('Created {0}.'.format(outname)))
 
 
 if __name__ == '__main__':

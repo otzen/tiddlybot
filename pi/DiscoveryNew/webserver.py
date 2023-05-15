@@ -1,16 +1,10 @@
 #!/usr/bin/python
 
 import os, os.path
-import glob
-import random
-import string
-import json
-from datetime import datetime
 
 import cherrypy
 import blockly_runner
 #from camera_streamer import Camera
-from discovery_bot import Movement
 
 class IndexPage(object):
     @cherrypy.expose
