@@ -147,7 +147,7 @@ def _process_file(filename):
 
         return results
     except IOError as e:
-        print('Error with file {0}: {1}'.format(filename, e.strerror))
+        print(('Error with file {0}: {1}'.format(filename, e.strerror)))
         sys.exit(1)
 
 

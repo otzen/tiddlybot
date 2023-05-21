@@ -82,4 +82,4 @@ if "key" in forms:
     # Save to memcache for next hit.
     if not memcache.add("XML_" + key_provided, xml, 3600):
       logging.error("Memcache set failed.")
-  print(xml.encode("utf-8"))
+  print((xml.encode("utf-8")))

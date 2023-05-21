@@ -254,8 +254,8 @@ class Gen_compressed(threading.Thread):
     if 'serverErrors' in json_data:
       errors = json_data['serverErrors']
       for error in errors:
-        print('SERVER ERROR: %s' % target_filename)
-        print(error['error'])
+        print(('SERVER ERROR: %s' % target_filename))
+        print((error['error']))
     elif 'errors' in json_data:
       errors = json_data['errors']
       for error in errors:
