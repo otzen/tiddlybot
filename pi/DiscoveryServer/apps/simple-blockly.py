@@ -1,8 +1,9 @@
 #-*- coding:utf-8 -*-
 from __future__ import division
 
-from discovery_bot import Ultrasound, pins
-from discovery_bot import Light
+from pi.tiddlyServer.discovery_bot import Ultrasound
+from pi.tiddlyServer.discovery_bot import pins
+from pi.tiddlyServer.discovery_bot import Light
 
 usound = Ultrasound()
 

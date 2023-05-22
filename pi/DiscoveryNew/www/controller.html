@@ -29,32 +29,32 @@
             var cameraImage = $('#camera');
             var btnShutdown = $( "#btnShutdown" );
         
-            console.log( screen.width + " " + screen.height );
+            console.log( window.innerwidth + " " + window.innerheight );
         
-            if ( screen.width > screen.height )
+            if ( window.innerwidth > window.innerheight )
             {
                 // In landscape mode
-                motorStick.css( 'left', 0.1*screen.width - motorStick.width()/2 );
-                motorStick.css( 'top', 0.5*screen.height - motorStick.height()/2 );
-                panTiltStick.css( 'left', 0.9*screen.width - panTiltStick.width()/2 );
-                panTiltStick.css( 'top', 0.5*screen.height - panTiltStick.height()/2 );
+                motorStick.css( 'left', 0.1*window.innerWidth  - motorStick.width()/2 );
+                motorStick.css( 'top', 0.5*window.innerheight - motorStick.height()/2 );
+                panTiltStick.css( 'left', 0.9*window.innerwidth - panTiltStick.width()/2 );
+                panTiltStick.css( 'top', 0.5*window.innerheight - panTiltStick.height()/2 );
                 btnShutdown.css( 'position', 'fixed' );
-                btnShutdown.css( 'left', 0.9*screen.width - btnShutdown.width()/2 );
-                btnShutdown.css( 'top', 0.1*screen.height );
+                btnShutdown.css( 'left', 0.9*window.innerwidth - btnShutdown.width()/2 );
+                btnShutdown.css( 'top', 0.1*window.innerheight );
             }
             else
             {
                 // In portrait mode
-                motorStick.css( 'left', 0.2*screen.width - motorStick.width()/2 );
-                motorStick.css( 'top', 0.7*screen.height - motorStick.height()/2 );
-                panTiltStick.css( 'left', 0.8*screen.width - panTiltStick.width()/2 );
-                panTiltStick.css( 'top', 0.7*screen.height - panTiltStick.height()/2 );
+                motorStick.css( 'left', 0.2*window.innerwidth - motorStick.width()/2 );
+                motorStick.css( 'top', 0.7*window.innerheight - motorStick.height()/2 );
+                panTiltStick.css( 'left', 0.8*window.innerwidth - panTiltStick.width()/2 );
+                panTiltStick.css( 'top', 0.7*window.innerheight - panTiltStick.height()/2 );
                 btnShutdown.css( 'position', 'fixed' );
-                btnShutdown.css( 'left', 0.5*screen.width - btnShutdown.width()/2 );
-                btnShutdown.css( 'top', 0.6*screen.height - btnShutdown.height()/2 );
+                btnShutdown.css( 'left', 0.5*window.innerwidth - btnShutdown.width()/2 );
+                btnShutdown.css( 'top', 0.6*window.innerheight - btnShutdown.height()/2 );
             }
             
-            cameraImage.css( 'max-width', screen.width );
+            cameraImage.css( 'max-width', window.innerwidth );
         }
     
         $( window ).on( "orientationchange", function() {

@@ -1,14 +1,13 @@
-import discovery_bot
-from discovery_bot import Movement
-from discovery_bot import Ultrasound
-from discovery_bot import Light
-from discovery_bot import Button
-from discovery_bot import Buzzer
+from pi.tiddlyServer.discovery_bot import Movement
+from pi.tiddlyServer.discovery_bot import Ultrasound
+from pi.tiddlyServer.discovery_bot import Light
+from pi.tiddlyServer.discovery_bot import Button
+from pi.tiddlyServer.discovery_bot import Buzzer
 import time
 robot = Movement()
-red = Light( discovery_bot.pins.LED_RED )
-blue = Light( discovery_bot.pins.LED_BLUE )
-green = Light( discovery_bot.pins.LED_GREEN )
+red = Light( pi.tiddlyServer.discovery_bot.pins.LED_RED )
+blue = Light( pi.tiddlyServer.discovery_bot.pins.LED_BLUE )
+green = Light( pi.tiddlyServer.discovery_bot.pins.LED_GREEN )
 buzzer = Buzzer()
 b = Button()
 usound = Ultrasound()

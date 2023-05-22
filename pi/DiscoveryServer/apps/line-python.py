@@ -1,4 +1,4 @@
-from discovery_bot import Movement
+from pi.tiddlyServer.discovery_bot import Movement
 import RPi.GPIO as GPIO
 import time
 

@@ -1,13 +1,13 @@
 import RPi.GPIO as GPIO
-import discovery_bot
+from pi.tiddlyServer import discovery_bot
 import time
 
 GPIO.setwarnings(False)
 
 def leds():
-    red = discovery_bot.Light( discovery_bot.pins.LED_RED )
-    blue = discovery_bot.Light( discovery_bot.pins.LED_BLUE )
-    green = discovery_bot.Light( discovery_bot.pins.LED_GREEN )
+    red = discovery_bot.Light( pi.tiddlyServer.discovery_bot.pins.LED_RED )
+    blue = discovery_bot.Light( pi.tiddlyServer.discovery_bot.pins.LED_BLUE )
+    green = discovery_bot.Light( pi.tiddlyServer.discovery_bot.pins.LED_GREEN )
 
     red.off()
     blue.off()
@@ -51,14 +51,14 @@ def ir():
 
 def buzzer():
     GPIO.setmode(GPIO.BCM)
-    GPIO.setup( discovery_bot.pins.BUZZER, GPIO.OUT )
-    GPIO.output( discovery_bot.pins.BUZZER, 1 )
+    GPIO.setup( pi.tiddlyServer.discovery_bot.pins.BUZZER, GPIO.OUT )
+    GPIO.output( pi.tiddlyServer.discovery_bot.pins.BUZZER, 1 )
     time.sleep(1)
-    GPIO.output( discovery_bot.pins.BUZZER, 0 )
+    GPIO.output( pi.tiddlyServer.discovery_bot.pins.BUZZER, 0 )
 
 def servo():
-    servo_left = discovery_bot.Servo( discovery_bot.pins.SERVO_LEFT_MOTOR )
-    servo_right = discovery_bot.Servo( discovery_bot.pins.SERVO_RIGHT_MOTOR )
+    servo_left = discovery_bot.Servo( pi.tiddlyServer.discovery_bot.pins.SERVO_LEFT_MOTOR )
+    servo_right = discovery_bot.Servo( pi.tiddlyServer.discovery_bot.pins.SERVO_RIGHT_MOTOR )
     #servo2 = discovery_bot.Servo(1)
     #servo3 = discovery_bot.Servo(2)
 

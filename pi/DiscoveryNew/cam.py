@@ -1,4 +1,4 @@
-from discovery_bot import Servo
+from pi.tiddlyServer.discovery_bot import Servo
 
 s1 = Servo(1)
 s2 = Servo(2)

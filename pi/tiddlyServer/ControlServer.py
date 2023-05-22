@@ -3,6 +3,7 @@
 import os
 
 from tornado import web, ioloop
+# noinspection PyPackageRequirements
 from sockjs.tornado import SockJSRouter, SockJSConnection
 
 from discovery_bot import pins

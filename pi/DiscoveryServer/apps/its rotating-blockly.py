@@ -1,9 +1,10 @@
 #-*- coding:utf-8 -*-
 from __future__ import division
 
-from discovery_bot import Movement, pins
+from pi.tiddlyServer.discovery_bot import Movement
+from pi.tiddlyServer.discovery_bot import pins
 import time
-from discovery_bot import Light
+from pi.tiddlyServer.discovery_bot import Light
 
 robot = Movement()
 

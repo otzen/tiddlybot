@@ -1,7 +1,7 @@
 #-*- coding:utf-8 -*-
 from __future__ import division
 
-from discovery_bot import Movement
+from pi.tiddlyServer.discovery_bot import Movement
 import time
 
 robot = Movement()

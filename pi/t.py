@@ -1,9 +1,10 @@
 #-*- coding:utf-8 -*-
 from __future__ import division
 
-from discovery_bot import Light, pins
+from pi.tiddlyServer.discovery_bot import Light
+from pi.tiddlyServer.discovery_bot import pins
 import time
-from discovery_bot import Ultrasound
+from pi.tiddlyServer.discovery_bot import Ultrasound
 
 red = Light( pins.LED_RED )
 

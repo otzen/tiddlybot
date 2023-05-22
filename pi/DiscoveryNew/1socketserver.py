@@ -5,8 +5,8 @@ import tornado.escape
 import sockjs.tornado
 import signal
 
-from discovery_bot import Movement
-from discovery_bot import Servo
+from pi.tiddlyServer.discovery_bot import Movement
+from pi.tiddlyServer.discovery_bot import Servo
 
 robot = Movement()
 s1 = Servo(1)
