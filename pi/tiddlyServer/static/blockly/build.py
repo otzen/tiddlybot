@@ -168,8 +168,8 @@ class Gen_compressed(threading.Thread):
       ]
 
     # Read in all the source files.
-    filenames = calcdeps.CalculateDependencies(self.search_paths,
-        [os.path.join('core', 'blockly.js')])
+    filenames = calcdeps.CalculateDependencies( self.search_paths,
+                                                [ os.path.join( 'core', 'blockly.js' ) ] )
     for filename in filenames:
       # Filter out the Closure files (the compiler will add them).
       if filename.startswith(os.pardir + os.sep):  # '../'
@@ -195,7 +195,7 @@ class Gen_compressed(threading.Thread):
     # Read in all the source files.
     # Add Blockly.Blocks to be compatible with the compiler.
     params.append(('js_code', "goog.provide('Blockly.Blocks');"))
-    filenames = glob.glob(os.path.join('blocks', '*.js'))
+    filenames = glob.glob( os.path.join( 'blocks', '*.js' ) )
     for filename in filenames:
       f = open(filename)
       params.append(('js_code', ''.join(f.readlines())))
@@ -221,8 +221,8 @@ class Gen_compressed(threading.Thread):
     # Add Blockly.Generator to be compatible with the compiler.
     params.append(('js_code', "goog.provide('Blockly.Generator');"))
     filenames = glob.glob(
-        os.path.join('generators', language, '*.js'))
-    filenames.insert(0, os.path.join('generators', language + '.js'))
+        os.path.join( 'generators', language, '*.js' ))
+    filenames.insert( 0, os.path.join( 'generators', language + '.js' ) )
     for filename in filenames:
       f = open(filename)
       params.append(('js_code', ''.join(f.readlines())))
@@ -354,13 +354,13 @@ class Gen_langfiles(threading.Thread):
 
   def run(self):
     # The files msg/json/{en,qqq,synonyms}.json depend on msg/messages.js.
-    if self._rebuild([os.path.join('msg', 'messages.js')],
-                     [os.path.join('msg', 'json', f) for f in
-                      ['en.json', 'qqq.json', 'synonyms.json']]):
+    if self._rebuild([ os.path.join( 'msg', 'messages.js' ) ],
+                     [ os.path.join( 'msg', 'json', f ) for f in
+                       ['en.json', 'qqq.json', 'synonyms.json'] ]):
       try:
         subprocess.check_call([
             'python',
-            os.path.join('i18n', 'js_to_json.py'),
+            os.path.join( 'i18n', 'js_to_json.py' ),
             '--input_file', 'msg/messages.js',
             '--output_dir', 'msg/json/',
             '--quiet'])
@@ -377,13 +377,13 @@ class Gen_langfiles(threading.Thread):
       # Use create_messages.py to create .js files from .json files.
       cmd = [
           'python',
-          os.path.join('i18n', 'create_messages.py'),
-          '--source_lang_file', os.path.join('msg', 'json', 'en.json'),
-          '--source_synonym_file', os.path.join('msg', 'json', 'synonyms.json'),
-          '--key_file', os.path.join('msg', 'json', 'keys.json'),
-          '--output_dir', os.path.join('msg', 'js'),
+          os.path.join( 'i18n', 'create_messages.py' ),
+          '--source_lang_file', os.path.join( 'msg', 'json', 'en.json' ),
+          '--source_synonym_file', os.path.join( 'msg', 'json', 'synonyms.json' ),
+          '--key_file', os.path.join( 'msg', 'json', 'keys.json' ),
+          '--output_dir', os.path.join( 'msg', 'js' ),
           '--quiet']
-      json_files = glob.glob(os.path.join('msg', 'json', '*.json'))
+      json_files = glob.glob( os.path.join( 'msg', 'json', '*.json' ) )
       json_files = [file for file in json_files if not
                     (file.endswith(('keys.json', 'synonyms.json', 'qqq.json')))]
       cmd.extend(json_files)

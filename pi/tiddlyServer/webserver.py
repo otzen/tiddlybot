@@ -26,13 +26,20 @@ class IndexPage( Page ):
 
 
 class BlocklyPage( Page ):
+
+    def __init__( self, root: str = None, staticDir: str = 'static' ):
+        super().__init__( root, staticDir )
+        self.tempDir = os.path.join( self.root, 'blocklyTemp' )
+
     @cherrypy.expose
     def index( self ):
-        return open( './static/blockly.html' )
+        os.makedirs( self.tempDir, exist_ok=True )
+        return open( os.path.join( self.staticDir, 'blockly.html' ) )
 
     @cherrypy.expose
     def start( self, code ):
-        app = open( '../DiscoveryNew/program.py', 'rw+' )
+        progPath = os.path.join( self.tempDir, 'program.py')
+        app = open( progPath, 'w' )
         code_write = """import discovery_bot
 from discovery_bot import Movement
 from discovery_bot import Servo
@@ -49,14 +56,16 @@ green = Light(discovery_bot.pins.LED_GREEN)
 buzzer = Buzzer()
 b = Button()
 usound = Ultrasound()
+print('hello')
 """
         code_write += code
         app.seek( 0 )
         app.write( code_write )
         app.truncate()
         app.close()
-        blockly_runner.stop()
-        blockly_runner.run( 'program.py' )
+        if blockly_runner.is_running():
+            blockly_runner.stop()
+        blockly_runner.run( progPath )
 
     @cherrypy.expose
     def stop( self ):
@@ -87,6 +96,10 @@ if __name__ == '__main__':
         '/js': {
             'tools.staticdir.on': True,
             'tools.staticdir.dir': 'js',
+        },
+        '/blocklyFiles': {
+            'tools.staticdir.on': True,
+            'tools.staticdir.dir': 'blockly',
         },
         '/images': {
             'tools.staticdir.on': True,
